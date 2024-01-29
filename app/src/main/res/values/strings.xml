@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AIDAS_v2</string>
+    <string name="gallery_mode">Gallery Mode</string>
+    <string name="live_mode">Live Mode</string>
+    <string name="select_from_gallery">Select From Gallery</string>
+    <string name="image_for_object_detection">Image for object detection</string>
+    <string name="live_camera_feed">Live Camera feed</string>
+
+    <string-array name="models">
+        <item>Pedestrian V1</item>
+        <item>Traffic Sign V3</item>
+    </string-array>
+</resources>
