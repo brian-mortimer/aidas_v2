@@ -9,5 +9,7 @@
     <string-array name="models">
         <item>Pedestrian V1</item>
         <item>Traffic Sign V3</item>
+        <item>Mobile Net V1</item>
+        <item>Traffic Sign V4</item>
     </string-array>
 </resources>

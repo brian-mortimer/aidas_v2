@@ -19,7 +19,7 @@ class ObjectDetectionHelper (
     var threshold: Float = THRESHOLD_DEFAULT,
     var maxResults: Int = MAX_RESULTS_DEFAULT,
     var currentDelegate: Int = DELEGATE_CPU,
-    var currentModel: Int = MODEL_MOBILENET_V1,
+    var currentModel: Int = MODEL_EFFICIENTDET_LITE0,
     var runningMode: RunningMode = RunningMode.IMAGE,
     val context: Context,
     // The listener is only used when running in RunningMode.LIVE_STREAM
@@ -163,7 +163,6 @@ class ObjectDetectionHelper (
                 "Attempting to call detectImage while not using RunningMode.IMAGE"
             )
         }
-
         if (objectDetector == null) return null
 
         val startTime = SystemClock.uptimeMillis()
@@ -189,8 +188,10 @@ class ObjectDetectionHelper (
     fun getModelName(modelId: Int): String {
         // Additional models should be added to this when block
         val modelName = when(modelId) {
-            MODEL_MOBILENET_V1 -> "efficientdet-lite0.tflite"
-            MODEL_TRAFFIC_SIGN_V1 -> "road_sign_detection_v3.tflite"
+            MODEL_EFFICIENTDET_LITE0 -> "efficientdet-lite0.tflite"
+            MODEL_TRAFFIC_SIGN_V1 -> "traffic_sign_detection_v3.tflite"
+            MODEL_MOBILENET_V1 -> "mobilenetv1.tflite"
+            MODEL_TRAFFIC_SIGN_V4 -> "traffic_sign_detection_model_v4.tflite"
             else -> "efficientdet-lite0.tflite"
         }
         return modelName
@@ -211,8 +212,10 @@ class ObjectDetectionHelper (
 
     companion object {
         // Models: Additional models should be added here
-        const val MODEL_MOBILENET_V1 = 0
+        const val MODEL_EFFICIENTDET_LITE0 = 0
         const val MODEL_TRAFFIC_SIGN_V1 = 1
+        const val MODEL_MOBILENET_V1 = 2
+        const val MODEL_TRAFFIC_SIGN_V4 = 3
 
         // Object Detector Defaults
         const val DELEGATE_CPU = 0

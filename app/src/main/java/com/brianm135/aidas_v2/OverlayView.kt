@@ -3,10 +3,12 @@ package com.brianm135.aidas_v2
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectorResult
+import java.util.LinkedList
 import kotlin.math.max
 import kotlin.math.min
 
@@ -93,11 +95,8 @@ class OverlayView(context: Context?, attrs: AttributeSet?) :
 
             // Create text to display alongside detected objects
             val category = results?.detections()!![index].categories()[0]
-            val drawableText =
-                category.categoryName() + " " + String.format(
-                    "%.2f",
-                    category.score()
-                )
+            val drawableText = "${category.categoryName()} ${String.format("%.2f", category.score())}"
+            Log.i("result", drawableText)
 
             // Draw rect behind display text
             textBackgroundPaint.getTextBounds(
@@ -124,6 +123,41 @@ class OverlayView(context: Context?, attrs: AttributeSet?) :
                 textPaint
             )
         }
+//        super.draw(canvas)
+//
+//        for (result in results) {
+////            if(result.categories[0].label != "person") continue
+//            val boundingBox = result.
+//
+//            val top = boundingBox.top * scaleFactor
+//            val bottom = boundingBox.bottom * scaleFactor
+//            val left = boundingBox.left * scaleFactor
+//            val right = boundingBox.right * scaleFactor
+//
+//            // Draw bounding box around detected objects
+//            val drawableRect = RectF(left, top, right, bottom)
+//            canvas.drawRect(drawableRect, boxPaint)
+//
+//            // Create text to display alongside detected objects
+//            val drawableText =
+//                result.categories[0].label + " " +
+//                        String.format("%.2f", result.categories[0].score)
+//
+//            // Draw rect behind display text
+//            textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
+//            val textWidth = bounds.width()
+//            val textHeight = bounds.height()
+//            canvas.drawRect(
+//                left,
+//                top,
+//                left + textWidth + Companion.BOUNDING_RECT_TEXT_PADDING,
+//                top + textHeight + Companion.BOUNDING_RECT_TEXT_PADDING,
+//                textBackgroundPaint
+//            )
+//
+//            // Draw text for detected object
+//            canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
+//        }
     }
 
     fun setResults(
