@@ -5,6 +5,10 @@
     <string name="select_from_gallery">Select From Gallery</string>
     <string name="image_for_object_detection">Image for object detection</string>
     <string name="live_camera_feed">Live Camera feed</string>
+    <string name="plus_btn">+</string>
+    <string name="threshold_txt_default">0.50</string>
+    <string name="minus_btn">-</string>
+    <string name="threshold">Threshold</string>
 
     <string-array name="models">
         <item>Pedestrian V1</item>
