@@ -12,8 +12,7 @@ import java.util.LinkedList
 import kotlin.math.max
 import kotlin.math.min
 
-class OverlayView(context: Context?, attrs: AttributeSet?) :
-    View(context, attrs) {
+class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private var results: ObjectDetectorResult? = null
     private var boxPaint = Paint()
@@ -72,9 +71,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) :
             // Rotate box.
             matrix.postRotate(outputRotate.toFloat())
 
-            // If the outputRotate is 90 or 270 degrees, the translation is
-            // applied after the rotation. This is because a 90 or 270 degree rotation
-            // flips the image vertically or horizontally, respectively.
+            // Flip rotation depending on rotation.
             if (outputRotate == 90 || outputRotate == 270) {
                 matrix.postTranslate(outputHeight / 2f, outputWidth / 2f)
             } else {
@@ -123,41 +120,6 @@ class OverlayView(context: Context?, attrs: AttributeSet?) :
                 textPaint
             )
         }
-//        super.draw(canvas)
-//
-//        for (result in results) {
-////            if(result.categories[0].label != "person") continue
-//            val boundingBox = result.
-//
-//            val top = boundingBox.top * scaleFactor
-//            val bottom = boundingBox.bottom * scaleFactor
-//            val left = boundingBox.left * scaleFactor
-//            val right = boundingBox.right * scaleFactor
-//
-//            // Draw bounding box around detected objects
-//            val drawableRect = RectF(left, top, right, bottom)
-//            canvas.drawRect(drawableRect, boxPaint)
-//
-//            // Create text to display alongside detected objects
-//            val drawableText =
-//                result.categories[0].label + " " +
-//                        String.format("%.2f", result.categories[0].score)
-//
-//            // Draw rect behind display text
-//            textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
-//            val textWidth = bounds.width()
-//            val textHeight = bounds.height()
-//            canvas.drawRect(
-//                left,
-//                top,
-//                left + textWidth + Companion.BOUNDING_RECT_TEXT_PADDING,
-//                top + textHeight + Companion.BOUNDING_RECT_TEXT_PADDING,
-//                textBackgroundPaint
-//            )
-//
-//            // Draw text for detected object
-//            canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
-//        }
     }
 
     fun setResults(
@@ -181,14 +143,16 @@ class OverlayView(context: Context?, attrs: AttributeSet?) :
             else -> return
         }
 
-        // Images, videos are displayed in FIT_START mode.
-        // Camera live streams is displayed in FILL_START mode. So we need to scale
-        // up the bounding box to match with the size that the images/videos/live streams being
-        // displayed.
+
         scaleFactor = when (runningMode) {
-            RunningMode.IMAGE,
-            RunningMode.VIDEO -> {
+            RunningMode.IMAGE-> {
                 min(
+                    width * 1f / rotatedWidthHeight.first,
+                    height * 1f / rotatedWidthHeight.second
+                )
+            }
+            RunningMode.VIDEO -> {
+                max(
                     width * 1f / rotatedWidthHeight.first,
                     height * 1f / rotatedWidthHeight.second
                 )

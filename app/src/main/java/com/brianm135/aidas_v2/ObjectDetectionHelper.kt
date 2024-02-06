@@ -43,10 +43,15 @@ class ObjectDetectionHelper (
         objectDetector = null
     }
 
+    /**
+     * Setup the object detector
+     *
+     * Initialise the base detector depending on Live stream mode or gallery mode.
+     */
     fun setupObjectDetector() {
         val baseOptionsBuilder = BaseOptions.builder()
 
-        // Use the specified hardware for running the model. Default to CPU
+        // Default to CPU
         when (currentDelegate) {
             DELEGATE_CPU -> baseOptionsBuilder.setDelegate(Delegate.CPU)
             DELEGATE_GPU -> baseOptionsBuilder.setDelegate(Delegate.GPU)
@@ -55,7 +60,7 @@ class ObjectDetectionHelper (
         val modelName = getModelName(currentModel)
         baseOptionsBuilder.setModelAssetPath(modelName)
 
-        // Check if runningMode is consistent with objectDetectorListener
+        // Ensure runningMode matches with objectDetectorListener
         when (runningMode) {
             RunningMode.LIVE_STREAM -> {
                 if (objectDetectorListener == null) {
@@ -64,7 +69,6 @@ class ObjectDetectionHelper (
                     )
                 }
             }
-
             RunningMode.IMAGE, RunningMode.VIDEO -> {
                 // no-op
             }
@@ -81,13 +85,15 @@ class ObjectDetectionHelper (
             when (runningMode) {
                 RunningMode.IMAGE, RunningMode.VIDEO -> optionsBuilder.setRunningMode(runningMode)
 
+                // Set result and error listeners for live stream mode.
                 RunningMode.LIVE_STREAM -> optionsBuilder.setRunningMode(runningMode)
                     .setResultListener(this::returnLivestreamResult)
                     .setErrorListener(this::returnLivestreamError)
             }
-
+            // build options and create object detector.
             val options = optionsBuilder.build()
             objectDetector = ObjectDetector.createFromOptions(context, options)
+
 
         } catch (e: IllegalStateException) {
             objectDetectorListener?.onError("Object detector failed to initialize. See logs for details")
@@ -98,8 +104,12 @@ class ObjectDetectionHelper (
         }
     }
 
+    /***
+     * Detect Livestream frames and update results.
+     */
     fun detectLivestreamFrame(imageProxy: ImageProxy) {
 
+        // Ensure Runningmode is livestream.
         if (runningMode != RunningMode.LIVE_STREAM) {
             throw IllegalArgumentException(
                 "Attempting to call detectLivestreamFrame" + " while not using RunningMode.LIVE_STREAM"
@@ -115,6 +125,7 @@ class ObjectDetectionHelper (
         imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
         imageProxy.close()
 
+        // if rotation doesn't match specified rotation then clear and setup object detector again.
         if (imageProxy.imageInfo.rotationDegrees != imageRotation) {
             imageRotation = imageProxy.imageInfo.rotationDegrees
             clearObjectDetector()
@@ -128,18 +139,25 @@ class ObjectDetectionHelper (
         detectAsync(mpImage, frameTime)
     }
 
-    // Run object detection using MediaPipe Object Detector API
+    /**
+     * Run object Detection using MediaPipe Object Detector API
+     * @property mpImage media pipe image to run inference on.
+     * @property frameTime timestamp of frame
+     */
     @VisibleForTesting
     fun detectAsync(mpImage: MPImage, frameTime: Long) {
-        // As we're using running mode LIVE_STREAM, the detection result will be returned in
-        // returnLivestreamResult function
+        // Result returned in returnLivestreamResult function
         objectDetector?.detectAsync(mpImage, imageProcessingOptions, frameTime)
     }
 
+    /**
+     * Result of detectLivestreamFrame is return in this function
+     */
     private fun returnLivestreamResult(result: ObjectDetectorResult, input: MPImage) {
         val finishTimeMs = SystemClock.uptimeMillis()
         val inferenceTime = finishTimeMs - result.timestampMs()
 
+        // Set results to a resultBundle custom object.
         objectDetectorListener?.onResults(
             ResultBundle(
                 listOf(result),
@@ -157,6 +175,11 @@ class ObjectDetectionHelper (
     }
 
 
+    /**
+     * Perform inference on a single bitmap image.
+     * @property image image to run inference on.
+     * @return ResultBundle containing result of inference
+     */
     fun detectImage(image: Bitmap): ResultBundle? {
         if (runningMode != RunningMode.IMAGE) {
             throw IllegalArgumentException(
@@ -184,9 +207,14 @@ class ObjectDetectionHelper (
     }
 
 
-
+    /**
+     * Get the Model file name using Int ID value.
+     * @property modelId integer value representing the model.
+     * @return String containing model file name.
+     */
     fun getModelName(modelId: Int): String {
         // Additional models should be added to this when block
+        //TODO: Convert this to a dictionary?
         val modelName = when(modelId) {
             MODEL_EFFICIENTDET_LITE0 -> "efficientdet-lite0.tflite"
             MODEL_TRAFFIC_SIGN_V1 -> "traffic_sign_detection_v3.tflite"
@@ -197,6 +225,9 @@ class ObjectDetectionHelper (
         return modelName
     }
 
+    /**
+     * Result Bundle class is a custom class for representing detection results.
+     */
     data class ResultBundle(
         val results: List<ObjectDetectorResult>,
         val inferenceTime: Long,
@@ -220,7 +251,7 @@ class ObjectDetectionHelper (
         // Object Detector Defaults
         const val DELEGATE_CPU = 0
         const val DELEGATE_GPU = 1
-        const val MAX_RESULTS_DEFAULT = 3
+        const val MAX_RESULTS_DEFAULT = 5
         const val THRESHOLD_DEFAULT = 0.5F
 
         const val TAG = "ObjectDetectorHelper"

@@ -38,11 +38,13 @@ class GalleryActivity : AppCompatActivity(), ObjectDetectionHelper.DetectorListe
         imageView = findViewById(R.id.galleryImageView)
 
         val currentModel = intent.getSerializableExtra("model") as Int
+        val threshold = intent.getSerializableExtra("threshold") as Float
 
         objectDetectionHelper = ObjectDetectionHelper(
             context = this,
             currentModel = currentModel,
             objectDetectorListener = this,
+            threshold = threshold,
             runningMode = RunningMode.IMAGE
         )
 
@@ -50,15 +52,21 @@ class GalleryActivity : AppCompatActivity(), ObjectDetectionHelper.DetectorListe
             objectDetectionHelper.setupObjectDetector()
         }
 
-        modelNameTextView.setText("Model: ${objectDetectionHelper.getModelName(currentModel)}")
+        modelNameTextView.text = "Model: ${objectDetectionHelper.getModelName(currentModel)}"
 
 
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if(uri != null) {
                 Log.d("MediaPicker", "Selected URI $uri")
+
+                if (objectDetectionHelper.isClosed()) {
+                    objectDetectionHelper.setupObjectDetector()
+                }
+
                 val inputImage = uriToBitmap(uri)
                 imageView.setImageBitmap(inputImage)
                 if (inputImage != null) {
+                    viewBinding.overlayView.clear()
 
                     objectDetectionHelper.detectImage(inputImage)?.let { resultBundle ->
                         Log.i("result", "Inference Time ${resultBundle.inferenceTime}")
@@ -72,6 +80,7 @@ class GalleryActivity : AppCompatActivity(), ObjectDetectionHelper.DetectorListe
                     }
 
                     objectDetectionHelper.clearObjectDetector()
+
                 }
             }
             else {
