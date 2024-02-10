@@ -8,7 +8,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectorResult
-import java.util.LinkedList
 import kotlin.math.max
 import kotlin.math.min
 

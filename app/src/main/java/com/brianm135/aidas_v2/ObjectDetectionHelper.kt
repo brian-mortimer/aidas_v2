@@ -80,6 +80,11 @@ class ObjectDetectionHelper (
                 .setScoreThreshold(threshold).setRunningMode(runningMode)
                 .setMaxResults(maxResults)
 
+            if(currentModel == MODEL_MOBILENET_V1 || currentModel == MODEL_EFFICIENTDET_LITE0 || currentModel == MODEL_SSD_MOBILENET_V1){
+                optionsBuilder.setCategoryAllowlist(mutableListOf("person"))
+            }
+
+
             imageProcessingOptions = ImageProcessingOptions.builder().setRotationDegrees(imageRotation).build()
 
             when (runningMode) {
@@ -214,13 +219,14 @@ class ObjectDetectionHelper (
      */
     fun getModelName(modelId: Int): String {
         // Additional models should be added to this when block
-        //TODO: Convert this to a dictionary?
         val modelName = when(modelId) {
+            MODEL_TRAFFIC_SIGN_V1 -> "traffic_sign_detection_model_v1.tflite"
+            MODEL_TRAFFIC_SIGN_V2 -> "traffic_sign_detection_model_v2.tflite"
+            MODEL_TRAFFIC_SIGN_V3 -> "traffic_sign_detection_model_v3.tflite"
             MODEL_EFFICIENTDET_LITE0 -> "efficientdet-lite0.tflite"
-            MODEL_TRAFFIC_SIGN_V1 -> "traffic_sign_detection_v3.tflite"
             MODEL_MOBILENET_V1 -> "mobilenetv1.tflite"
-            MODEL_TRAFFIC_SIGN_V4 -> "traffic_sign_detection_model_v4.tflite"
-            else -> "efficientdet-lite0.tflite"
+            MODEL_SSD_MOBILENET_V1 -> "ssd_mobilenet_v1.tflite"
+            else -> "ssd_mobilenet_v1.tflite"
         }
         return modelName
     }
@@ -243,10 +249,15 @@ class ObjectDetectionHelper (
 
     companion object {
         // Models: Additional models should be added here
-        const val MODEL_EFFICIENTDET_LITE0 = 0
-        const val MODEL_TRAFFIC_SIGN_V1 = 1
-        const val MODEL_MOBILENET_V1 = 2
+
+        const val MODEL_TRAFFIC_SIGN_V1 = 0
+        const val MODEL_TRAFFIC_SIGN_V2 = 1
+        const val MODEL_TRAFFIC_SIGN_V3 = 2
         const val MODEL_TRAFFIC_SIGN_V4 = 3
+        const val MODEL_EFFICIENTDET_LITE0 = 4
+        const val MODEL_MOBILENET_V1 = 5
+        const val MODEL_SSD_MOBILENET_V1 =6
+
 
         // Object Detector Defaults
         const val DELEGATE_CPU = 0
