@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         val modelSpinner: Spinner = findViewById(R.id.modelSelectionSpinner)
         val galleryBtn: Button = findViewById(R.id.galleryBtn)
         val liveBtn: Button = findViewById(R.id.liveBtn)
+        val testBtn: Button = findViewById(R.id.testBtn)
+
         val increaseThresholdBtn: Button = findViewById(R.id.plusThreshold)
         val decreaseThresholdBtn: Button = findViewById(R.id.minusThreshold)
         val thresholdTxt: TextView = findViewById(R.id.thresholdText)
@@ -44,6 +46,16 @@ class MainActivity : AppCompatActivity() {
 
             // Handle switching to Live Mode.
             val intent = Intent(this, LiveActivity::class.java)
+            intent.putExtra("model", selectedModel)
+            intent.putExtra("threshold", threshold)
+            startActivity(intent)
+        }
+
+        testBtn.setOnClickListener {
+            val selectedModel = getSelectedModel(modelSpinner)
+
+            // Handle switching to Live Mode.
+            val intent = Intent(this, TestActivity::class.java)
             intent.putExtra("model", selectedModel)
             intent.putExtra("threshold", threshold)
             startActivity(intent)

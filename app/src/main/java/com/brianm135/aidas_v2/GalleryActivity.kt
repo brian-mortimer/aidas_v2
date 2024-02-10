@@ -12,12 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.brianm135.aidas_v2.databinding.ActivityGalleryBinding
-import com.brianm135.aidas_v2.databinding.ActivityLiveBinding
-import com.google.android.material.tabs.TabLayout.TabGravity
 import com.google.mediapipe.tasks.vision.core.RunningMode
-import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectionResult
 import java.io.FileDescriptor
 import java.io.IOException
 

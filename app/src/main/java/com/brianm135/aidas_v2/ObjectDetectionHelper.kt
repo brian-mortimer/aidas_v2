@@ -220,6 +220,7 @@ class ObjectDetectionHelper (
             MODEL_TRAFFIC_SIGN_V1 -> "traffic_sign_detection_v3.tflite"
             MODEL_MOBILENET_V1 -> "mobilenetv1.tflite"
             MODEL_TRAFFIC_SIGN_V4 -> "traffic_sign_detection_model_v4.tflite"
+            MODEL_TEST -> "model_2.tflite"
             else -> "efficientdet-lite0.tflite"
         }
         return modelName
@@ -247,6 +248,7 @@ class ObjectDetectionHelper (
         const val MODEL_TRAFFIC_SIGN_V1 = 1
         const val MODEL_MOBILENET_V1 = 2
         const val MODEL_TRAFFIC_SIGN_V4 = 3
+        const val MODEL_TEST = 4
 
         // Object Detector Defaults
         const val DELEGATE_CPU = 0

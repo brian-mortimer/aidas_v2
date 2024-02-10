@@ -27,12 +27,23 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/testBtn"
+        android:layout_width="320dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/test_mode"
+        app:layout_constraintBottom_toTopOf="@+id/liveBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Spinner
         android:id="@+id/modelSelectionSpinner"
         android:layout_width="300dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/liveBtn"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/testBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -42,6 +53,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/modelSelectionSpinner"
         app:layout_constraintEnd_toEndOf="parent"

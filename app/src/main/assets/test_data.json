@@ -1,0 +1,62 @@
+[
+  {
+    "boundaries": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "label": "50 km/h",
+    "imgPath": "test/50 km_h.jpg"
+  },
+  {
+    "boundaries": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "label": "80 km/h",
+    "imgPath": "test/80 km_h.jpg"
+  },
+  {
+    "boundaries": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "label": "100 km/h",
+    "imgPath": "test/100 km_h.jpg"
+  },
+  {
+    "boundaries": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "label": "stop",
+    "imgPath": "test/stop.jpg"
+  },
+  {
+    "boundaries": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "label": "T-Junction",
+    "imgPath": "test/T-Junction.jpg"
+  },
+  {
+    "boundaries": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "label": "Yield",
+    "imgPath": "test/yield.jpg"
+  }
+]

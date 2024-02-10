@@ -57,4 +57,6 @@ dependencies {
     implementation("androidx.camera:camera-view:1.1.0")
     // MediaPipe
     implementation("com.google.mediapipe:tasks-vision:latest.release")
+    //GSON
+    implementation("com.google.code.gson:gson:2.8.8")
 }

@@ -9,11 +9,14 @@
     <string name="threshold_txt_default">0.50</string>
     <string name="minus_btn">-</string>
     <string name="threshold">Threshold</string>
+    <string name="test_mode">Test Mode</string>
+    <string name="run_test">Run Test</string>
 
     <string-array name="models">
         <item>Pedestrian V1</item>
         <item>Traffic Sign V3</item>
         <item>Mobile Net V1</item>
         <item>Traffic Sign V4</item>
+        <item>Test Model</item>
     </string-array>
 </resources>
