@@ -63,6 +63,7 @@ class LiveActivity : AppCompatActivity(), ObjectDetectionHelper.DetectorListener
         }
 
         modelNameTextView.text = "Model: ${objectDetectionHelper.getModelName(currentModel)}"
+        viewBinding.overlayView2.setRunningMode(RunningMode.LIVE_STREAM)
     }
 
     /*

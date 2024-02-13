@@ -223,6 +223,7 @@ class ObjectDetectionHelper (
             MODEL_TRAFFIC_SIGN_V1 -> "traffic_sign_detection_model_v1.tflite"
             MODEL_TRAFFIC_SIGN_V2 -> "traffic_sign_detection_model_v2.tflite"
             MODEL_TRAFFIC_SIGN_V3 -> "traffic_sign_detection_model_v3.tflite"
+            MODEL_TRAFFIC_SIGN_V4 -> "traffic_sign_detection_model_v4.tflite"
             MODEL_EFFICIENTDET_LITE0 -> "efficientdet-lite0.tflite"
             MODEL_MOBILENET_V1 -> "mobilenetv1.tflite"
             MODEL_SSD_MOBILENET_V1 -> "ssd_mobilenet_v1.tflite"

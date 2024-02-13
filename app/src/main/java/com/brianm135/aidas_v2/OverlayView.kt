@@ -17,7 +17,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     private var boxPaint = Paint()
     private var textBackgroundPaint = Paint()
     private var textPaint = Paint()
-    private var scaleFactor: Float = 1f
+    private var scaleFactor: Float = 10f
     private var bounds = Rect()
     private var outputWidth = 0
     private var outputHeight = 0
@@ -25,8 +25,10 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     private var runningMode: RunningMode = RunningMode.IMAGE
 
     init {
+
         initPaints()
     }
+
 
     fun clear() {
         results = null
@@ -127,6 +129,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         outputWidth: Int,
         imageRotation: Int
     ) {
+        Log.i("TEST", "Output(${outputWidth}, ${outputHeight})")
         results = detectionResults
         this.outputWidth = outputWidth
         this.outputHeight = outputHeight

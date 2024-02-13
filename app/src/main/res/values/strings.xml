@@ -12,8 +12,9 @@
 
     <string-array name="models">
         <item>Traffic Sign V1</item>
-        <item>Traffic Sign V2 (MobileNet V1, AP:0.2476)</item>
-        <item>Traffic Sign V3 (MobileNet Multi AVG I384, AP:0.XXXX</item>
+        <item>Traffic Sign V2 (MobileNet V2, AP:0.2476)</item>
+        <item>Traffic Sign V3 (MobileNet Multi AVG I384, AP:0.379</item>
+        <item>Traffic Sign V4 (MobileNet V2 I320, AP:0.343</item>
         <item>Pedestrian V1 (EfficientDet Lite 0)</item>
         <item>Pedestrian V2 (MobileNet V1)</item>
         <item>Pedestrian V3 (SSD MobileNet V1)</item>
