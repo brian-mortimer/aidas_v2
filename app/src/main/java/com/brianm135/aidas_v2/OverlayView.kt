@@ -129,7 +129,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         outputWidth: Int,
         imageRotation: Int
     ) {
-        Log.i("TEST", "Output(${outputWidth}, ${outputHeight})")
+//        Log.i("TEST", "Output(${outputWidth}, ${outputHeight})")
         results = detectionResults
         this.outputWidth = outputWidth
         this.outputHeight = outputHeight
@@ -161,6 +161,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             }
 
             RunningMode.LIVE_STREAM -> {
+                Log.i("TEST", "Output(${outputWidth}, ${outputHeight})")
                 max(
                     width * 1f / rotatedWidthHeight.first,
                     height * 1f / rotatedWidthHeight.second
